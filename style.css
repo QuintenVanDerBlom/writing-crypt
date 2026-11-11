@@ -1,0 +1,176 @@
+
+:root {
+    --bg: #030303;
+    --text: #c0c0c0;
+    --accent: #5a0000;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: filter 0.6s ease;
+}
+
+body.dread {
+    filter: brightness(0.75);
+}
+
+/* Subtle static noise overlay for psychological dread */
+.noise {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.04%22/%3E%3C/svg%3E');
+    pointer-events: none;
+    z-index: 50;
+}
+
+/* Vignette darkening the edges of the viewport */
+.vignette {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+    z-index: 40;
+}
+
+/* Faint fog drifting behind the text, barely there */
+.fog {
+    position: fixed;
+    width: 140vmax;
+    height: 140vmax;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 5;
+}
+
+.fog-a {
+    top: -40vmax;
+    left: -50vmax;
+    background: radial-gradient(circle, rgba(30,30,34,0.16) 0%, transparent 60%);
+    animation: fogDriftA 90s ease-in-out infinite alternate;
+}
+
+.fog-b {
+    bottom: -50vmax;
+    right: -60vmax;
+    background: radial-gradient(circle, rgba(20,20,24,0.14) 0%, transparent 60%);
+    animation: fogDriftB 110s ease-in-out infinite alternate;
+}
+
+@keyframes fogDriftA {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(18vmax, 12vmax) scale(1.15); }
+}
+
+@keyframes fogDriftB {
+    from { transform: translate(0, 0) scale(1.1); }
+    to { transform: translate(-14vmax, -18vmax) scale(0.95); }
+}
+
+.container {
+    width: 85%;
+    max-width: 700px;
+    padding: 5rem 0;
+    position: relative;
+    z-index: 10;
+}
+
+header {
+    margin-bottom: 5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #222;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: normal;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #eaeaea;
+    margin-bottom: 0.5rem;
+    /* Unsettling flicker effect */
+    animation: flicker 5s infinite alternate;
+}
+
+.subtitle {
+    font-style: italic;
+    color: #555;
+    margin: 0;
+}
+
+.whisper {
+    margin-top: 1.5rem;
+    color: #3a3a3a;
+    letter-spacing: 3px;
+    font-size: 0.85rem;
+    animation: whisperPulse 9s ease-in-out infinite;
+}
+
+@keyframes whisperPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+section {
+    margin-bottom: 4rem;
+    padding-left: 1.5rem;
+    border-left: 1px solid #222;
+    transition: border-color 0.8s ease;
+}
+
+section:hover {
+    border-left-color: var(--accent);
+}
+
+h2 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: #888;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+}
+
+p {
+    line-height: 1.8;
+    font-size: 0.95rem;
+    color: #a0a0a0;
+}
+
+footer {
+    margin-top: 6rem;
+    font-size: 0.75rem;
+    color: #333;
+    text-align: center;
+}
+
+/* Creepy slow reveal animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 2s ease-out, transform 2s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.4s; }
+.delay-2 { transition-delay: 0.8s; }
+.delay-3 { transition-delay: 1.2s; }
+.delay-4 { transition-delay: 1.6s; }
+.delay-5 { transition-delay: 2s; }
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 8px rgba(255,255,255,0.1); }
+    20%, 24%, 55% { opacity: 0.4; text-shadow: none; }
+    22% { opacity: 0.1; }
+}
